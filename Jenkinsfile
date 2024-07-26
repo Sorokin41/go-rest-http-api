@@ -4,16 +4,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                script {
+                    git url: 'https://github.com/Sorokin41/go-rest-http-api.git', branch: 'main'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
                 script {
-                    // Развертываем приложение с помощью Docker Compose
                     sh 'docker-compose up -d'
                 }
             }
         }
+    }
 }
