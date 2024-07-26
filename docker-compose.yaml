@@ -1,0 +1,31 @@
+services:
+  go-rest-api-server:
+    build: .
+    restart: always
+    ports:
+      - "8082:8082"
+    networks:
+      - pg
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB : debug
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "6432:5432"
+    networks:
+      - pg
+
+volumes:
+  postgres-data:
+
+networks:
+  pg:
+    driver: bridge
